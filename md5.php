@@ -1,13 +1,31 @@
 <?php
-$x = 10;
-$i = 0;
-$_0 = str_repeat("0", $x);
-$_f = str_repeat("f", $x);
+/**
+ * @copyright Copyright (C) 2023 Daniel J. Pepin
+ * @license MIT
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the MIT License.
+ *
+ *
+ * Usage: php md5.php
+ *   Finds hashes that start with many zeros, f's, and "self-hashes".
+ *   Outputs interesting hashes to "output.txt".
+ *   You can run multiple instances of this script at the same time.
+ */
 
-$benchmark = isset($argv[1]) && $argv[1] === 'benchmark';
+// Number of characters that must match to be considered "interesting".
+// Large number is slower and grows exponentially.
+// Recommended 8 to 10 for starters... May take multiple days to find a match of 14 characters.
+$x = 6;
+
+// The 00000... string we are looking for.
+$_0 = str_repeat("0", $x);
+
+// The fffff... string we are looking for.
+$_f = str_repeat("f", $x);
 
 $start_time = microtime(TRUE);
 
+$i = 0;
 while ($i < PHP_INT_MAX) {
   $previous = microtime(TRUE) . '_' . $i;
   $p_hash = md5($previous);
@@ -16,12 +34,7 @@ while ($i < PHP_INT_MAX) {
     $hash = md5($p_hash);
 
     if (strncmp($hash, $p_hash, $x) === 0) {
-      if ($hash === $p_hash) {
-        file_put_contents("output.txt", $previous . "->" . $p_hash . "->" . $hash . " (" . count_similar($p_hash, $hash) . ")" . "\n", FILE_APPEND);
-      }
-      else {
-        file_put_contents("output.txt", $previous . "->" . $p_hash . "->" . $hash . " (" . count_similar($p_hash, $hash) . ")" . "\n", FILE_APPEND);
-      }
+      file_put_contents("output.txt", $previous . "->" . $p_hash . "->" . $hash . " (" . count_similar($p_hash, $hash) . ")" . "\n", FILE_APPEND);
     }
     elseif (strncmp($hash, $_0, $x) === 0) {
       file_put_contents("output.txt", $previous . "->" . $p_hash . "->" . $hash . " (" . count_similar($_0, $hash) . ")" . "\n", FILE_APPEND);
@@ -35,14 +48,17 @@ while ($i < PHP_INT_MAX) {
   }
 
   $i++;
-
-  if ($benchmark) {
-    $end_time = microtime(TRUE);
-    echo number_format($i * 10 / ($end_time - $start_time), 2) . "MH/s" . "\n";
-  }
 }
 
-function count_similar(string $a, string $b): string {
+/**
+ * Cound the number of matching characters.
+ *
+ * @param string $a
+ * @param string $b
+ *
+ * @return int
+ */
+function count_similar(string $a, string $b): int {
   $i = 0;
   $len = strlen($a);
   while ($i < $len && $b[$i] === $a[$i]) {

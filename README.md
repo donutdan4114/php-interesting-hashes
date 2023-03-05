@@ -6,11 +6,11 @@ This script is designed to find some interesting hashes. The default agorithm is
 
 Examples of what this script finds.
 
-| Start Hash                       | Mid Hash                             | End Hash                             | Type  |
-|----------------------------------|--------------------------------------|--------------------------------------|-------|
-| 2815b7eea085b019d2b1905b4fa02534 | **1bd29e**ed3395cf5d86c65be5864d44e7 | **1bd29e**befde05fbb3521fbbdef1b4305 | match |
-| 2be5b64b5fc7a8a32774f37d94741ffb | 5ec819ae282a4f2dbd421eca80a6faf7     | **000000**94d75fdd8241f7b2e8898ee671 | zeros |
-| a5204677e4710b183e720690b41d4e2a | a71f786bb9be81d0dbe6f9282ad8a988     | **ffffff**da437959787354010fab9e89c6 | f's   |
+| Start Hash                         | Mid Hash                           | End Hash                           | Type  |
+|------------------------------------|------------------------------------|------------------------------------|-------|
+| `2815b7eea085b019d2b1905b4fa02534` | `1bd29eed3395cf5d86c65be5864d44e7` | `1bd29ebefde05fbb3521fbbdef1b4305` | match |
+| `2be5b64b5fc7a8a32774f37d94741ffb` | `5ec819ae282a4f2dbd421eca80a6faf7` | `00000094d75fdd8241f7b2e8898ee671` | zeros |
+| `a5204677e4710b183e720690b41d4e2a` | `a71f786bb9be81d0dbe6f9282ad8a988` | `ffffffda437959787354010fab9e89c6` | f's   |
 
 Try hashing `b350ce3d00952de6f145fb22bbcec676` [here](https://emn178.github.io/online-tools/md5.html).
 
